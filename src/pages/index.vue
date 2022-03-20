@@ -1,33 +1,179 @@
 <script setup lang="ts">
-function handleCopyUrl() {
+
+// type
+interface IconType {
+  type: string
+  list: IconMeta[]
 }
-const iconList = ref([
-  'https://api.iconify.design/ri:macbook-fill.svg?color=%23888888',
-  'https://api.iconify.design/fa6-brands:js-square.svg?color=%23888888',
-  'https://api.iconify.design/mdi:github-box.svg?color=%23888888',
+interface IconMeta {
+  iconUrl: string
+  keyword: ''
+  color: ''
+}
+
+// icon list
+const defaultIcons = ref([
+  {
+    type: 'Technology',
+    list: [
+      {
+        iconUrl: 'https://api.iconify.design/fa6-brands:js-square.svg?color=%23888888',
+        keyword: 'javascript',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/mdi:github-box.svg?color=%23888888',
+        keyword: 'github',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/mdi:git.svg?color=%23888888',
+        keyword: 'git',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/vscode-icons:file-type-vue.svg?color=%23888888',
+        keyword: 'vue',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/vscode-icons:file-type-vite.svg?color=%23888888',
+        keyword: 'vite',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/ri:macbook-fill.svg?color=%23888888',
+        keyword: 'macbook',
+        color: '',
+      },
+    ],
+  },
+  {
+    type: 'Wandering',
+    list: [
+      {
+        iconUrl: 'https://api.iconify.design/carbon:video-chat.svg?color=%23888888',
+        keyword: 'video',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/fluent:movies-and-tv-20-filled.svg?color=%23888888',
+        keyword: 'movie',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/ic:twotone-menu-book.svg?color=%23888888',
+        keyword: 'book',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/carbon:idea.svg?color=%23888888',
+        keyword: 'idea',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/carbon:game-console.svg?color=%23888888',
+        keyword: 'game',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/mdi:music-clef-treble.svg?color=%23888888',
+        keyword: 'musci',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/ic:baseline-edit-note.svg?color=%23888888',
+        keyword: 'note',
+        color: '',
+      },
+    ],
+
+  },
 ])
+const customizeIcons = useStorage<IconType>('customize-icon', {
+  type: 'Customize',
+  list: [],
+})
+const iconList = computed(() => {
+  return [...defaultIcons.value, customizeIcons.value]
+})
+
+// copy and remove
+const clipboard = useClipboard()
+function handleCopyUrl(iconUrl: string) {
+  clipboard.copy(iconUrl)
+}
+function handleRemoveUrl(index: number) {
+  customizeIcons.value.list.splice(index, 1)
+}
+
+// add icon
+const iconUrl = ref('')
+function addIcon() {
+  const icon: IconMeta = {
+    iconUrl: iconUrl.value,
+    keyword: '',
+    color: '',
+  }
+  customizeIcons.value.list.push(icon)
+  iconUrl.value = ''
+}
+function getIconName(url: string) {
+  const iconName = url.split('/')[url.split('/').length - 1]
+  return iconName.split('.')[0]
+}
+
 </script>
 
 <template>
-  <div>
-    <h1 text-size-14>
-      fine-icons
+  <div sm:w-50vw w-full m-auto>
+    <h1 text-size-8 mb-6>
+      Fine icons for Notion
     </h1>
-    <div container>
+    <div v-for="iconType in iconList" :key="iconType.type" mb-4>
+      <h2 mb-4>
+        {{ iconType.type }}
+      </h2>
       <ul>
         <li
-          v-for="icon in iconList" :key="icon"
+          v-for="(iconObj,index) in iconType.list" :key="iconObj.iconUrl"
           flex items-center justify-center gap-4
+          mb-2
         >
-          <img :src="icon" alt="">
+          <img :src="iconObj.iconUrl" alt="">
           <div w-60 truncate>
-            {{ icon }}
+            {{ getIconName(iconObj.iconUrl ) }}
           </div>
-          <button @click="handleCopyUrl">
-            COPY
+          <button class="btn" @click="handleCopyUrl(iconObj.iconUrl)">
+            copy
+          </button>
+          <button
+            v-if="iconType.type === 'Customize'"
+            class="btn-warning"
+            @click="handleRemoveUrl(index)"
+          >
+            remove
           </button>
         </li>
       </ul>
+    </div>
+    <div mb-4>
+      <div flex items-center justify-center gap-2>
+        <input
+          v-model="iconUrl"
+          type="text"
+          placeholder="Icon url"
+          autocomplete="false"
+          outline-none
+          border="1 base"
+          text="center"
+          bg="transparent"
+          @keydown.enter="addIcon"
+        >
+        <button class="btn" @click="addIcon">
+          Add
+        </button>
+      </div>
     </div>
   </div>
 </template>
