@@ -11,6 +11,14 @@ import { isDark, toggleDark } from '~/composables'
 
     <a
       class="icon-btn"
+      i-carbon-logo-github
+      rel="noreferrer"
+      href="https://github.com/mypridelife/fxxx-icons"
+      target="_blank"
+      title="GitHub"
+    />
+    <a
+      class="icon-btn"
       i-carbon-color-switch
       rel="noreferrer"
       href="https://icones.js.org/collection/all"
