@@ -14,20 +14,61 @@ interface IconMeta {
 // icon list
 const defaultIcons = ref([
   {
+    type: 'Wandering',
+    list: [
+      {
+        iconUrl: 'https://api.iconify.design/icon-park:video-two.svg?color=%23888888',
+        keyword: 'video',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/fluent:movies-and-tv-20-filled.svg?color=%23888888',
+        keyword: 'movie',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/icon-park:book.svg?color=%23888888',
+        keyword: 'book',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/flat-color-icons:idea.svg?color=%23888888',
+        keyword: 'idea',
+        color: '',
+      },
+      {
+        iconUrl: 'https://s3.bmp.ovh/imgs/2022/03/5e1221f27dd912e6.png',
+        keyword: 'game',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/icon-park:music-one.svg?color=%23888888',
+        keyword: 'musci',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/icon-park:write.svg?color=%23888888',
+        keyword: 'note',
+        color: '',
+      },
+    ],
+
+  },
+  {
     type: 'Technology',
     list: [
       {
-        iconUrl: 'https://api.iconify.design/fa6-brands:js-square.svg?color=%23888888',
+        iconUrl: 'https://api.iconify.design/logos:javascript.svg?color=%23888888',
         keyword: 'javascript',
         color: '',
       },
       {
-        iconUrl: 'https://api.iconify.design/mdi:github-box.svg?color=%23888888',
+        iconUrl: 'https://api.iconify.design/mdi:github.svg?color=%23888888',
         keyword: 'github',
         color: '',
       },
       {
-        iconUrl: 'https://api.iconify.design/mdi:git.svg?color=%23888888',
+        iconUrl: 'https://api.iconify.design/vscode-icons:file-type-git.svg?color=%23888888',
         keyword: 'git',
         color: '',
       },
@@ -43,52 +84,58 @@ const defaultIcons = ref([
       },
       {
         iconUrl: 'https://api.iconify.design/ri:macbook-fill.svg?color=%23888888',
-        keyword: 'macbook',
-        color: '',
-      },
-    ],
-  },
-  {
-    type: 'Wandering',
-    list: [
-      {
-        iconUrl: 'https://api.iconify.design/carbon:video-chat.svg?color=%23888888',
-        keyword: 'video',
+        keyword: 'pc',
         color: '',
       },
       {
-        iconUrl: 'https://api.iconify.design/fluent:movies-and-tv-20-filled.svg?color=%23888888',
-        keyword: 'movie',
+        iconUrl: 'https://api.iconify.design/wpf:mac-os.svg?color=%23888888',
+        keyword: 'apple',
         color: '',
       },
       {
-        iconUrl: 'https://api.iconify.design/ic:twotone-menu-book.svg?color=%23888888',
-        keyword: 'book',
+        iconUrl: 'https://api.iconify.design/mdi:language-markdown.svg?color=%23888888',
+        keyword: '',
         color: '',
       },
       {
-        iconUrl: 'https://api.iconify.design/carbon:idea.svg?color=%23888888',
-        keyword: 'idea',
+        iconUrl: 'https://api.iconify.design/vscode-icons:file-type-light-pnpm.svg?color=%23888888',
+        keyword: '',
         color: '',
       },
       {
-        iconUrl: 'https://api.iconify.design/carbon:game-console.svg?color=%23888888',
-        keyword: 'game',
+        iconUrl: 'https://api.iconify.design/logos:npm-icon.svg?color=%23888888',
+        keyword: '',
         color: '',
       },
       {
-        iconUrl: 'https://api.iconify.design/mdi:music-clef-treble.svg?color=%23888888',
-        keyword: 'musci',
+        iconUrl: 'https://api.iconify.design/ic:baseline-http.svg?color=%23888888',
+        keyword: '',
         color: '',
       },
       {
-        iconUrl: 'https://api.iconify.design/ic:baseline-edit-note.svg?color=%23888888',
-        keyword: 'note',
+        iconUrl: 'https://api.iconify.design/ion:paper-airplane.svg?color=%23888888',
+        keyword: '',
         color: '',
       },
-    ],
 
+      {
+        iconUrl: 'https://api.iconify.design/vscode-icons:file-type-css.svg?color=%23888888',
+        keyword: '',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/vscode-icons:file-type-reactjs.svg?color=%23888888',
+        keyword: '',
+        color: '',
+      },
+      {
+        iconUrl: 'https://api.iconify.design/vscode-icons:file-type-vscode.svg?color=%23888888',
+        keyword: '',
+        color: '',
+      },
+    ],
   },
+
 ])
 const customizeIcons = useStorage<IconType>('customize-icon', {
   type: 'Customize',
@@ -140,7 +187,7 @@ function getIconName(url: string) {
           flex items-center justify-center gap-4
           mb-2
         >
-          <img :src="iconObj.iconUrl" alt="">
+          <img :src="iconObj.iconUrl" alt="" w-16px h-16px>
           <div w-60 truncate>
             {{ getIconName(iconObj.iconUrl ) }}
           </div>
